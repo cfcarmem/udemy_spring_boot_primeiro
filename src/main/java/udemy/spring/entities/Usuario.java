@@ -1,16 +1,19 @@
 package udemy.spring.entities;
 
 import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Objects;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 @Entity
-@Table(name = "Usuario")
+@Table(name = "tb_usuario")
 public class Usuario implements Serializable{
 	
 	/**
@@ -27,6 +30,13 @@ public class Usuario implements Serializable{
 	private String password;
 	private String fone;
 	
+	//associa com Order Um para muitos. Um cliente tem vários pedidos
+	//anotação dos pedidos do usuário um usuário tem muitos pedidos
+	@OneToMany(mappedBy ="client")
+	
+	private List<Order> orders = new ArrayList<>();
+	
+
 	public Usuario() {
 	}
 	
@@ -89,6 +99,9 @@ public class Usuario implements Serializable{
 		this.fone = fone;
 	}
 
+	public List<Order> getOrders() {
+		return orders;
+	}
 
 	@Override
 	public String toString() {
