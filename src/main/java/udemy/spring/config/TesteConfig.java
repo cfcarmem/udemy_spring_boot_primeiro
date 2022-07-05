@@ -10,6 +10,7 @@ import org.springframework.context.annotation.Profile;
 
 import udemy.spring.entities.Order;
 import udemy.spring.entities.Usuario;
+import udemy.spring.entities.enums.OrderStatus;
 import udemy.spring.repositories.OrderRepositories;
 import udemy.spring.repositories.UserRepositories;
 
@@ -31,9 +32,9 @@ public class TesteConfig  implements CommandLineRunner{
 		userRepo.saveAll(Arrays.asList(u1,u2));
 		
 		//usando padrão UTC
-		Order o1 = new Order(null, Instant.parse("2022-06-20T19:53:07Z"), u1); 
-		Order o2 = new Order(null, Instant.parse("2022-07-21T03:42:10Z"), u2); 
-		Order o3 = new Order(null, Instant.parse("2022-07-22T15:21:22Z"), u1);
+		Order o1 = new Order(null, Instant.parse("2022-06-20T19:53:07Z"),OrderStatus.PAYMENT, u1); 
+		Order o2 = new Order(null, Instant.parse("2022-07-21T03:42:10Z"),OrderStatus.PAYMENT, u2); 
+		Order o3 = new Order(null, Instant.parse("2022-07-22T15:21:22Z"),OrderStatus.CANCELED, u1);
 		orderRepo.saveAll(Arrays.asList(o1,o2,o3));
 		
 		

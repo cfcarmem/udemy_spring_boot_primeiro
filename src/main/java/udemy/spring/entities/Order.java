@@ -14,6 +14,8 @@ import javax.persistence.Table;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 
+import udemy.spring.entities.enums.OrderStatus;
+
 @Entity
 @Table(name="tb_order")
 public class Order implements Serializable {
@@ -30,6 +32,7 @@ public class Order implements Serializable {
 	@JsonFormat(shape= JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd'T'HH:mm:ss'Z'", timezone = "GMT")
 	private Instant moment;
 	
+	private Integer  orderStatus;
 	//vamos criar as associações.
 	//informar ao JPA que é chave estrangeira
 	//um usuário tem vários pedidos. Muitos para UM anotation JPA
@@ -40,11 +43,21 @@ public class Order implements Serializable {
 	
 	public Order() {}
 
-	public Order(Long id, Instant moment, Usuario client) {
-		super();
+	public Order(Long id, Instant moment,  OrderStatus orderStatus, Usuario client) {
 		this.id = id;
 		this.moment = moment;
 		this.client = client;
+		setOrderStatus(orderStatus);
+	}
+
+	public OrderStatus getOrderStatus() {
+		return OrderStatus.valueOf(orderStatus);
+	}
+
+	public void setOrderStatus(OrderStatus orderStatus) {
+		if(orderStatus != null) {
+			this.orderStatus = orderStatus.getCode();
+		}
 	}
 
 	public Long getId() {
@@ -90,9 +103,9 @@ public class Order implements Serializable {
 
 	@Override
 	public String toString() {
-		return "Order [id=" + id + ", moment=" + moment + ", client=" + client + "]";
+		return "Order [id=" + id + ", moment=" + moment + ", orderStatus=" + orderStatus + ", client=" + client + "]";
 	}
-	
+
 	
 	
 	
