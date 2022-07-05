@@ -12,6 +12,8 @@ import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 @Entity
 @Table(name = "tb_usuario")
 public class Usuario implements Serializable{
@@ -32,6 +34,18 @@ public class Usuario implements Serializable{
 	
 	//associa com Order Um para muitos. Um cliente tem vários pedidos
 	//anotação dos pedidos do usuário um usuário tem muitos pedidos
+	
+	@JsonIgnore
+	
+	/* 
+	 * Json Ignore é muio importante quando tem associação Many. O tal do Jackson que faz a coisa acontecer.
+	 * COMO tem associação com Orders, para não entrar em loop, tem que colocar JsonIgnore aqui ou lá no Order.
+	 * Colocando aqui, quando consultar na url users/1 só vai trazer o usuário e quando consultar orders/1 vai 
+	 * trazer o pedido e o usuário do pedido.
+	 * se eu deixar o JsonIgnore em pedido, ao consultar o usuário, vai trazer todos os pedidos dele. Haja memória.
+	 * spring.jpa.open-in-view=true  (isso que permite)
+
+	 * */
 	@OneToMany(mappedBy ="client")
 	
 	private List<Order> orders = new ArrayList<>();

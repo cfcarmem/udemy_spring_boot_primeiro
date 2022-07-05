@@ -9,11 +9,10 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
-import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
-import org.hibernate.annotations.ManyToAny;
+import com.fasterxml.jackson.annotation.JsonFormat;
 
 @Entity
 @Table(name="tb_order")
@@ -28,12 +27,13 @@ public class Order implements Serializable {
 	private Long id;
 	
 	//pegar o momento atual. Melhor que date
+	@JsonFormat(shape= JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd'T'HH:mm:ss'Z'", timezone = "GMT")
 	private Instant moment;
 	
 	//vamos criar as associações.
 	//informar ao JPA que é chave estrangeira
 	//um usuário tem vários pedidos. Muitos para UM anotation JPA
-	
+	//@JsonIgnore ---não quero que, ao pesquisar os usuários traga os pedidos. Vou deixar o JsonIgnor somente no usuario 
 	@ManyToOne
 	@JoinColumn(name="usuario_id")
 	private Usuario client;
