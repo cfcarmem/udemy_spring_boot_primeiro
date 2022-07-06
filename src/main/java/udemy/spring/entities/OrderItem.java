@@ -16,7 +16,7 @@ import udemy.spring.entities.pk.OrderItemPK;
 public class OrderItem  implements Serializable{
 	
 	private static final long serialVersionUID = 1L;
-	//idcomposto usamos outra annotation
+	//idcomposto usamos outra annotation product_id e order_id
 	
 	@EmbeddedId
 	private OrderItemPK id = new OrderItemPK();
@@ -35,6 +35,7 @@ public class OrderItem  implements Serializable{
 		id.setProduct(product);
 	}
 	
+	//coloca o JsonIgnore para não entrar em loop
 	@JsonIgnore
 	public Order getOrder() {
 		return id.getOrder();
@@ -48,6 +49,7 @@ public class OrderItem  implements Serializable{
 		return quantity;
 	}
 	
+	//coloca o JsonIgnore para não entrar em loop
 	public Product getProduct() {
 		return id.getProduct();
 	}

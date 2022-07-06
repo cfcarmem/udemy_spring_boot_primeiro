@@ -13,7 +13,10 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 @Entity
 @Table(name="tb_product")
@@ -36,6 +39,12 @@ public class Product implements Serializable {
 	, inverseJoinColumns = @JoinColumn(name = "category_id"))	
 	private Set<Category> categories = new HashSet<>();
 	
+	//Set para não haver repetições do mesmo item
+
+	@OneToMany(mappedBy = "id.product" ,fetch = FetchType.EAGER)  // o id.product vem de: id da classe OrderItem do atributo id e o product da classe Order ItemPK do private product
+	private Set<OrderItem> items = new HashSet<>();
+	
+	
 	public Product() {}
 
 	//não coloca coleção em construtor pois já estamos instanciando ele lá em cima.
@@ -48,7 +57,15 @@ public class Product implements Serializable {
 		this.imgUrl = imgUrl;
 	}
 
-
+	@JsonIgnore
+	public Set<Order> getOrders(){
+		Set<Order> set  = new HashSet<>();
+		for(OrderItem x: items) {
+			set.add(x.getOrder());
+		}
+		return set;
+	}
+	
 	public Long getId() {
 		return id;
 	}
@@ -118,13 +135,5 @@ public class Product implements Serializable {
 		Product other = (Product) obj;
 		return Objects.equals(id, other.id);
 	}
-
-
-
-
-
-	
-	
-	
 
 }

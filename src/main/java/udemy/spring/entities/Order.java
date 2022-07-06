@@ -41,6 +41,7 @@ public class Order implements Serializable {
 	//informar ao JPA que é chave estrangeira
 	//um usuário tem vários pedidos. Muitos para UM anotation JPA
 	//@JsonIgnore ---não quero que, ao pesquisar os usuários traga os pedidos. Vou deixar o JsonIgnor somente no usuario 
+	
 	@ManyToOne
 	@JoinColumn(name="usuario_id")  //informa a chave estrangeira
 	private Usuario client;
@@ -57,6 +58,8 @@ public class Order implements Serializable {
 		setOrderStatus(orderStatus);
 	}
 
+	
+	
 	public OrderStatus getOrderStatus() {
 		return OrderStatus.valueOf(orderStatus);
 	}
@@ -66,6 +69,7 @@ public class Order implements Serializable {
 			this.orderStatus = orderStatus.getCode();
 		}
 	}
+	
 
 	public Long getId() {
 		return id;
