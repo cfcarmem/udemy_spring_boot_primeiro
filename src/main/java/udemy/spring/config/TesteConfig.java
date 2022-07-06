@@ -33,6 +33,7 @@ public class TesteConfig  implements CommandLineRunner{
 	
 	@Autowired
 	private ProductRepositories productRepo;
+	
 
 	@Override
 	public void run(String... args) throws Exception {
@@ -41,7 +42,7 @@ public class TesteConfig  implements CommandLineRunner{
 		Category cat1 = new Category(null, "Electronics"); 
 		Category cat2 = new Category(null, "Books"); 
 		Category cat3 = new Category(null, "Computers"); 
-		categoryRepo.saveAll(Arrays.asList(cat1,cat2,cat3));
+		
 		
 		
 		Product p1 = new Product(null, "The Lord of the Rings", "Lorem ipsum dolor sit amet, consectetur.", 90.5, ""); 
@@ -49,6 +50,18 @@ public class TesteConfig  implements CommandLineRunner{
 		Product p3 = new Product(null, "Macbook Pro", "Nam eleifend maximus tortor, at mollis.", 1250.0, ""); 
 		Product p4 = new Product(null, "PC Gamer", "Donec aliquet odio ac rhoncus cursus.", 1200.0, ""); 
 		Product p5 = new Product(null, "Rails for Dummies", "Cras fringilla convallis sem vel faucibus.", 100.99, ""); 
+		
+		categoryRepo.saveAll(Arrays.asList(cat1,cat2,cat3));
+		productRepo.saveAll(Arrays.asList(p1,p2,p3,p4,p5));
+		
+		//vamos incluir a categoria no produto. vai gravar na tabela product_category. Não precisa criar classe para tabela product_category
+		p1.getCategories().add(cat2);
+		p2.getCategories().add(cat1);
+		p2.getCategories().add(cat3);
+		
+		p3.getCategories().add(cat3);
+		p4.getCategories().add(cat3);
+		p5.getCategories().add(cat2);
 		productRepo.saveAll(Arrays.asList(p1,p2,p3,p4,p5));
 		
 		

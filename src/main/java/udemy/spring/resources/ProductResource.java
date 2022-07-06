@@ -13,7 +13,7 @@ import udemy.spring.entities.Product;
 import udemy.spring.services.ProductServices;
 
 @RestController
-@RequestMapping("/products")
+@RequestMapping(value = "/produtos")
 public class ProductResource {
 	
 	@Autowired

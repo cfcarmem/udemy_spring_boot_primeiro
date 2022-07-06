@@ -41,6 +41,8 @@ public class Order implements Serializable {
 	@JoinColumn(name="usuario_id")  //informa a chave estrangeira
 	private Usuario client;
 	
+	
+	
 	public Order() {}
 
 	public Order(Long id, Instant moment,  OrderStatus orderStatus, Usuario client) {

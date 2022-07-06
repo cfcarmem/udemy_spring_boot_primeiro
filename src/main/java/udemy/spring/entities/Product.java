@@ -6,19 +6,18 @@ import java.util.Objects;
 import java.util.Set;
 
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
+import javax.persistence.ManyToMany;
 import javax.persistence.Table;
-import javax.persistence.Transient;
 
 @Entity
 @Table(name="tb_product")
 public class Product implements Serializable {
-	
-	/**
-	 * 
-	 */
 	
 	private static final long serialVersionUID = 1L;
 	
@@ -31,23 +30,23 @@ public class Product implements Serializable {
 	private Double price;
 	private String imgUrl;
 	
-	//vamos usar o Set. Usaremos um conj. Não vai ter o mesmo produto com a mesma categoria.
-	//o Set é uma interface e não poide ser instanciado. Usamos uma classe filha o relacionamento
-	@Transient   //o transiente permite que possamos rodar sem fazer 
+	
+	@ManyToMany(fetch = FetchType.EAGER)//coloquei o EAGER para buscar imediatamento  os categorias
+	@JoinTable(name = "tb_products_category", joinColumns = @JoinColumn(name = "product_id")
+	, inverseJoinColumns = @JoinColumn(name = "category_id"))	
 	private Set<Category> categories = new HashSet<>();
 	
 	public Product() {}
 
-
 	//não coloca coleção em construtor pois já estamos instanciando ele lá em cima.
 	public Product(Long id, String name, String description, Double price, String imgUrl) {
+		super();
 		this.id = id;
 		this.name = name;
 		this.description = description;
 		this.price = price;
 		this.imgUrl = imgUrl;
 	}
-
 
 
 	public Long getId() {
@@ -105,9 +104,8 @@ public class Product implements Serializable {
 
 	@Override
 	public int hashCode() {
-		return Objects.hash(description, id, imgUrl, name, price);
+		return Objects.hash(id);
 	}
-
 
 	@Override
 	public boolean equals(Object obj) {
@@ -118,10 +116,10 @@ public class Product implements Serializable {
 		if (getClass() != obj.getClass())
 			return false;
 		Product other = (Product) obj;
-		return Objects.equals(description, other.description) && Objects.equals(id, other.id)
-				&& Objects.equals(imgUrl, other.imgUrl) && Objects.equals(name, other.name)
-				&& Objects.equals(price, other.price);
+		return Objects.equals(id, other.id);
 	}
+
+
 
 
 
