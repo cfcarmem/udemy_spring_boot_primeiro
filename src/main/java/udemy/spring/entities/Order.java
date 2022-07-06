@@ -38,7 +38,7 @@ public class Order implements Serializable {
 	//um usuário tem vários pedidos. Muitos para UM anotation JPA
 	//@JsonIgnore ---não quero que, ao pesquisar os usuários traga os pedidos. Vou deixar o JsonIgnor somente no usuario 
 	@ManyToOne
-	@JoinColumn(name="usuario_id")
+	@JoinColumn(name="usuario_id")  //informa a chave estrangeira
 	private Usuario client;
 	
 	public Order() {}
