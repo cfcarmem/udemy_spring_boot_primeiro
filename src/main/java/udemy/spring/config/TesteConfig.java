@@ -11,6 +11,7 @@ import org.springframework.context.annotation.Profile;
 import udemy.spring.entities.Category;
 import udemy.spring.entities.Order;
 import udemy.spring.entities.OrderItem;
+import udemy.spring.entities.Payment;
 import udemy.spring.entities.Product;
 import udemy.spring.entities.Usuario;
 import udemy.spring.entities.enums.OrderStatus;
@@ -86,7 +87,11 @@ public class TesteConfig  implements CommandLineRunner{
 		OrderItem oi4 = new OrderItem(o3, p5, 2, p5.getPrice()); 
         orderItemRepo.saveAll(Arrays.asList(oi1,oi2,oi3,oi4));
 		
-		
+		Payment py1 = new Payment(null,Instant.parse("2022-06-20T21:53:07Z"),o1);
+		//não chama o repository do próprio Pa\yment. Uso do Order. Somente quando for OneToOne
+		o1.setPayment(py1);
+		orderRepo.save(o1);
+        
 	}
 	
 	
