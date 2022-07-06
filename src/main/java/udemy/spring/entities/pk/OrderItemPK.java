@@ -3,7 +3,7 @@ package udemy.spring.entities.pk;
 import java.io.Serializable;
 import java.util.Objects;
 
-import javax.persistence.Embeddable;
+import javax.persistence.Embeddable;import javax.persistence.FetchType;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 
@@ -13,7 +13,7 @@ import udemy.spring.entities.Product;
 
 @Embeddable
 public class OrderItemPK implements Serializable{
-	//vai ter referencia para o produto e para o pedido
+	//vai ter referencia para o produto e para o pedido. tabela binaria
 	
 	/**
 	 * 
