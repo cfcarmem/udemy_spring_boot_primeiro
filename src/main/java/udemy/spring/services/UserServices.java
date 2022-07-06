@@ -11,6 +11,7 @@ import org.springframework.stereotype.Service;
 
 import udemy.spring.entities.Usuario;
 import udemy.spring.repositories.UserRepositories;
+import udemy.spring.services.exceptions.ResourceNotFoundException;
 
 @Service  //ESSE É O REGISTR DO COMPONENTE POIS ELE TEM DEPENDENTE OU SEJA, ALGUMA CLASSE DÁ AUTOWIRED NELE
 public class UserServices {
@@ -25,7 +26,9 @@ public class UserServices {
 	public Usuario findById(Long id) {
 		//usar o Option da classe Optional para retornar 
 		 Optional<Usuario> obj = repo.findById(id);
-		 return obj.get();
+		 //return obj.get();
+		 //depois de criar as exceções personalizadas, vamos retornar assim
+		 return obj.orElseThrow(() -> new ResourceNotFoundException(id));
 	}
 	
 	//adicionando usuário
