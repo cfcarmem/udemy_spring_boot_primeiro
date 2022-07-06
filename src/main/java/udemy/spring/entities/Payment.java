@@ -12,6 +12,8 @@ import javax.persistence.MapsId;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 
 @Entity
 @Table(name="tb_payment")
@@ -26,6 +28,7 @@ public class Payment implements Serializable {
 	
 	//associações
 	//um para um 
+	@JsonIgnore  //para não entrar em loop pois já tem em Order
 	@OneToOne
 	@MapsId
 	private Order order;
